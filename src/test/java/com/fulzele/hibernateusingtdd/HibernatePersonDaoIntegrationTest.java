@@ -11,7 +11,9 @@ import java.util.Properties;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import org.junit.Test;
 
 import com.fulzele.hibernateusingtdd.HibernatePersonDao;
@@ -36,12 +38,12 @@ public class HibernatePersonDaoIntegrationTest {
 	}
 
 	private SessionFactory getSessionFactory() throws HibernateException, IOException {
-		return createConfiguration().buildSessionFactory();
 		
-//		serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-//	    configuration.getProperties()).build();
-//		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-//	    return sessionFactory;
+		Configuration configuration = createConfiguration();
+		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+				configuration.getProperties()).build();
+		SessionFactory sessionFactory  = configuration.buildSessionFactory(serviceRegistry);
+	    return sessionFactory;
 	    
 	}
 
